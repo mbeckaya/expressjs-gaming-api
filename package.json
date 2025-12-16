@@ -1,0 +1,27 @@
+{
+  "name": "expressjs-gaming-api",
+  "version": "1.0.0",
+  "description": "API for managing video games",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "mbeckaya",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^4.16.2",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "http-status": "^2.1.0",
+    "prisma": "^4.16.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.2",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.21.0"
+  }
+}
