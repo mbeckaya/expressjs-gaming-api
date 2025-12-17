@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import status from 'http-status';
 import { prisma } from '../database/prisma-client';
 import type { Game } from '../types/game';
-import { parseParamId } from '../utils/parse-param-id';
 import { API_BASE } from '../utils/constants';
 
 export default class GameController {
