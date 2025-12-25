@@ -16,15 +16,14 @@ Returns a list of all stored games.
 ```json
 [
   {
-    "id": "1",
+    "id": "ef4df21c-895b-43f0-97cf-cbedc935ef5f",
     "title": "The Legend of Code",
     "platform": "PC",
-    "isPhysical": false,
-    "isDigital": true,
     "genre": "Adventure",
     "publisher": "OpenAI Studios",
-    "release": 2024,
-    "href": "/api/v1/games/1"
+    "isPhysical": false,
+    "isDigital": true,
+    "release": 2024
   }
 ]
 ```
@@ -38,13 +37,13 @@ Returns a list of all stored games.
 #### Response – 200 OK
 ```json
 {
-  "id": "1",
+  "id": "ef4df21c-895b-43f0-97cf-cbedc935ef5f",
   "title": "The Legend of Code",
   "platform": "PC",
-  "isPhysical": false,
-  "isDigital": true,
   "genre": "Adventure",
   "publisher": "OpenAI Studios",
+  "isPhysical": false,
+  "isDigital": true,
   "release": 2024
 }
 ```
@@ -68,28 +67,25 @@ Returns a list of all stored games.
 {
   "title": "The Legend of Code",
   "platform": "PC",
-  "isPhysical": false,
-  "isDigital": true,
   "genre": "Adventure",
   "publisher": "OpenAI Studios",
+  "isPhysical": false,
+  "isDigital": true,
   "release": 2024
 }
 ```
 
 #### Response – 201 Created
-- The **Location** header contains the URL of the newly created resource.
-
 ```json
 {
-  "id": "1",
+  "id": "ef4df21c-895b-43f0-97cf-cbedc935ef5f",
   "title": "The Legend of Code",
   "platform": "PC",
-  "isPhysical": false,
-  "isDigital": true,
   "genre": "Adventure",
   "publisher": "OpenAI Studios",
-  "release": 2024,
-  "href": "/api/v1/games/1"
+  "isPhysical": false,
+  "isDigital": true,
+  "release": 2024
 }
 ```
 
@@ -107,10 +103,10 @@ Returns a list of all stored games.
 {
   "title": "The Legend of Code Remastered",
   "platform": "PC",
-  "isPhysical": false,
-  "isDigital": true,
   "genre": "Adventure",
   "publisher": "OpenAI Studios",
+  "isPhysical": false,
+  "isDigital": true,
   "release": 2025
 }
 ```
@@ -118,13 +114,13 @@ Returns a list of all stored games.
 #### Response – 200 OK
 ```json
 {
-  "id": "1",
+  "id": "ef4df21c-895b-43f0-97cf-cbedc935ef5f",
   "title": "The Legend of Code Remastered",
   "platform": "PC",
-  "isPhysical": false,
-  "isDigital": true,
   "genre": "Adventure",
   "publisher": "OpenAI Studios",
+  "isPhysical": false,
+  "isDigital": true,
   "release": 2025
 }
 ```

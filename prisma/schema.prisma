@@ -11,12 +11,37 @@ datasource db {
 }
 
 model Game {
-  id         String  @id @default(uuid())
-  title      String
-  platform   String
+  id    String @id @default(uuid())
+  title String
+
+  platformId String?
+  platform   Platform? @relation(fields: [platformId], references: [id])
+
+  genreId String?
+  genre   Genre?  @relation(fields: [genreId], references: [id])
+
+  publisherId String?
+  publisher   Publisher? @relation(fields: [publisherId], references: [id])
+
   isPhysical Boolean
   isDigital  Boolean
-  genre      String
-  publisher  String
   release    Int
+}
+
+model Platform {
+  id    String @id @default(uuid())
+  name  String @unique
+  games Game[]
+}
+
+model Genre {
+  id    String @id @default(uuid())
+  name  String @unique
+  games Game[]
+}
+
+model Publisher {
+  id    String @id @default(uuid())
+  name  String @unique
+  games Game[]
 }

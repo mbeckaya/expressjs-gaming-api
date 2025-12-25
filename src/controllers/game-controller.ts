@@ -1,87 +1,138 @@
 import { Request, Response } from 'express';
 import { prisma } from '../database/prisma-client';
 import status from 'http-status';
-import { API_BASE, GAME_NOT_FOUND } from '../utils/constants';
+import { GAME_NOT_FOUND } from '../utils/constants';
+import { mapGameResponse } from '../utils/game-mapper';
 import type { Game } from '../types/game';
 
 export default class GameController {
 
     async getGames(request: Request, response: Response) {
-        const games: Game[] = await prisma.game.findMany();
+        const games = await prisma.game.findMany({
+            include: {
+                platform: true,
+                genre: true,
+                publisher: true,
+            },
+        });
 
-        const gamesWithHref: Game[] = games.map(game => ({
-            ...game,
-            href: `${API_BASE}/games/${game.id}`,
-        }));
-
-        response
-            .status(status.OK)
-            .send(gamesWithHref);
+        response.status(status.OK).send(games.map(mapGameResponse));
     }
 
     async getGame(request: Request, response: Response) {
         const id = request.params.id;
 
-        const game: Game | null = await prisma.game.findUnique({
-            where: {
-                id: id
-            }
+        const game = await prisma.game.findUnique({
+            where: { id },
+            include: {
+                platform: true,
+                genre: true,
+                publisher: true,
+            },
         });
 
-        if (game) {
-            response
-                .status(status.OK)
-                .send(game);
-        } else {
-            response
+        if (!game) {
+            return response
                 .status(status.NOT_FOUND)
                 .send(GAME_NOT_FOUND);
         }
+
+        response.status(status.OK).send(mapGameResponse(game));
     }
+
 
     async addGame(request: Request, response: Response) {
         const body: Game = request.body;
 
-        const game: Game = await prisma.game.create({
-            data: body
+        const game = await prisma.game.create({
+            data: {
+                title: body.title,
+                isPhysical: body.isPhysical,
+                isDigital: body.isDigital,
+                release: body.release,
+
+                platform: {
+                    connectOrCreate: {
+                        where: { name: body.platform },
+                        create: { name: body.platform },
+                    },
+                },
+
+                genre: {
+                    connectOrCreate: {
+                        where: { name: body.genre },
+                        create: { name: body.genre },
+                    },
+                },
+
+                publisher: {
+                    connectOrCreate: {
+                        where: { name: body.publisher },
+                        create: { name: body.publisher },
+                    },
+                },
+            },
+            include: {
+                platform: true,
+                genre: true,
+                publisher: true,
+            },
         });
 
-        game.href = `${API_BASE}/games/${game.id}`;
-
-        response
-            .status(status.CREATED)
-            .location(game.href)
-            .send(game);
+        response.status(status.CREATED).send(mapGameResponse(game));
     }
 
     async updateGame(request: Request, response: Response) {
         const id = request.params.id;
-        const body: Game = request.body;
+        const body = request.body;
 
-        const game: Game | null = await prisma.game.findUnique({
-            where: {
-                id: id
-            }
+        const exists = await prisma.game.findUnique({
+            where: { id },
         });
 
-        if (game) {
-            await prisma.game.update({
-                where: {
-                    id: id
-                },
-                data: body
-            })
-
-            if (!body.id) body.id = id;
-
-            response
-                .status(status.OK)
-                .send(body);
-        } else {
-            response
+        if (!exists) {
+            return response
                 .status(status.NOT_FOUND)
                 .send(GAME_NOT_FOUND);
         }
+
+        const updatedGame = await prisma.game.update({
+            where: { id },
+            data: {
+                title: body.title,
+                isPhysical: body.isPhysical,
+                isDigital: body.isDigital,
+                release: body.release,
+
+                platform: {
+                    connectOrCreate: {
+                        where: { name: body.platform },
+                        create: { name: body.platform },
+                    },
+                },
+
+                genre: {
+                    connectOrCreate: {
+                        where: { name: body.genre },
+                        create: { name: body.genre },
+                    },
+                },
+
+                publisher: {
+                    connectOrCreate: {
+                        where: { name: body.publisher },
+                        create: { name: body.publisher },
+                    },
+                },
+            },
+            include: {
+                platform: true,
+                genre: true,
+                publisher: true,
+            },
+        });
+
+        response.status(status.OK).send(mapGameResponse(updatedGame));
     }
 
     async deleteGame(request: Request, response: Response) {
