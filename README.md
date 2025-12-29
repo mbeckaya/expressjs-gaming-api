@@ -1,4 +1,4 @@
-# expressjs-gaming-api
+# game-management-api
 
 This API provides CRUD endpoints for managing **Game** resources.  
 It is built with **Express**, **Prisma**, and **TypeScript**.

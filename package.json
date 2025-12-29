@@ -1,5 +1,5 @@
 {
-  "name": "expressjs-gaming-api",
+  "name": "game-management-api",
   "version": "1.0.0",
   "description": "API for managing video games",
   "main": "index.js",
